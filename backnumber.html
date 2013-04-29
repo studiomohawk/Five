@@ -1,0 +1,25 @@
+---
+layout: default
+title: Backnumber
+desctiption: Buck Number of Five
+---
+
+<div class="mod mod-recent-entry">
+	<div class="inner">
+		<div class="hd">
+			<h2 class="backnumber">Back Number</h2>
+		</div>
+		<div class="bd">
+			<ul class="list-none">
+			{% for post in site.posts %}
+			<li>
+			<div class="group">
+				<h4 class="post-title"><a href="{{ post.url }}" title="{{ post.title }}">
+{{ post.title }}</a></h4>
+			</div><!-- group -->
+			</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div><!-- inner -->
+</div><!-- mod -->

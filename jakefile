@@ -79,12 +79,11 @@ task('write', function(title) {
 		stream.write('layout: post\n');
 		stream.write('title: "' + title + '"\n');
 		stream.write('date: ' + yml + '\n');
-		stream.write('byline: "Yuya Saito"\n');
 		stream.write('---\n');
 	});
 });
 
 desc ('Deploy Amazon s3 Using s3Sync')
 task('deploy', function() {
-	execLog('s3sync -rpv _site/ publicdraft.studiomohawk.com:');
+	execLog('s3sync -rpv _site/ five.studiomohawk.com:');
 });
