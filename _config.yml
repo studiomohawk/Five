@@ -1,0 +1,29 @@
+# Presentation Settings
+
+sitename: Five
+tagline: Archiving cssradar@twitter
+desc: cssradar@twitter
+url: http://five.studiomohawk.com
+
+# TOOL Settings
+ga: UA-61203-21
+
+# System Settings
+auto: false
+server: false
+pygments: true
+permalink: pretty
+markdown: kramdown
+
+kramdown:
+  auto_ids: false
+  use_coderay: true
+
+  coderay:
+    coderay_wrap: div
+    coderay_line_numbers:
+    coderay_tab_width: 2
+    coderay_css: class
+
+exclude: [LICENSE, README.markdown, jakefile, .rbenv-version, tasks, node_modules, npm-debug.log, package.json, grunt.js, Gruntfile.js, aws.json]
+include: [_includes]

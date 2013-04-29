@@ -1,0 +1,8 @@
+_site/
+_site/*
+_site/**/*
+asset/
+asset/*
+asset/**/*
+node_modules
+aws.json
