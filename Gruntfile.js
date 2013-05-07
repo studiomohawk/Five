@@ -36,12 +36,20 @@ module.exports = function(grunt) {
       jekyll: {
         command: 'rm -rf _site/*; jekyll',
         stdout: true
+      },
+      server: {
+        command: 'http-server "./" -p "4000"',
+        stdout: true
       }
     },
     watch: {
-      css: {
-        files: ['asset/style/**/*.styl'],
+      stylus: {
+        files: ['asset/style/*.styl', 'asset/style/**/*.styl'],
         tasks: ['stylus']
+      },
+      cp: {
+        files: ['asset/style/**/*.styl'],
+        tasks: ['copy']
       },
       jekyllSources: {
         files: [
@@ -55,7 +63,7 @@ module.exports = function(grunt) {
     parallel: {
       assets: {
         grunt: true,
-        tasks: ['watch:css', 'watch:jekyllSources']
+        tasks: ['shell:server', 'watch:stylus', 'copy:css', 'watch:jekyllSources']
       }
     }
   });
@@ -68,9 +76,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-parallel');
+  grunt.loadNpmTasks('grunt-aws');
 
   // Default task
   grunt.registerTask('default', ['parallel']);
-  // CSS Build task
-  grunt.registerTask('cssbuild', ['stylus','csso']);
+  // Deploy task
+  grunt.registerTask('deploy', ['']);
 };

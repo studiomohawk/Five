@@ -1,32 +1,8 @@
 var fs = require('fs'),
-	path = require('path'),
+  path = require('path'),
+  util = require('util'),
 	exec = require('child_process').exec,
-	util = require('util');
-
-getDate = function(format) {
-	var today = new Date();
-	var DD = today.getDate();
-	var MM = today.getMonth() + 1; //January is 0!
-	var YYYY = today.getFullYear();
-	var hh = today.getHours();
-	var mm = today.getMinutes();
-	var ss = today.getSeconds();
-
-	if (DD < 10) {
-		DD = '0' + DD;
-	}
-	if (MM < 10) {
-		MM = '0' + MM;
-	}
-
-	if (format === 'filename') {
-		return [YYYY, MM, DD].join('-');
-	} else if (format === 'yml') {
-		return [YYYY, MM, DD].join('-') + ' ' + [hh, mm, ss].join(':');
-	} else {
-		return [MM, DD, YYYY, hh, mm, ss].join('-');
-	}
-};
+  dateFormat = require('dateformat');
 
 // Shortcut to run exec command with logging and error support
 execLog = function(stringCommand, callback) {
@@ -46,44 +22,35 @@ execLog = function(stringCommand, callback) {
 	});
 };
 
-gsub = function(source, pattern, replacement) {
-	var match, result;
-	if (!((pattern !== null) && (replacement !== null))) {
-		return source;
-	}
-	result = '';
-	while (source.length > 0) {
-		if ((match = source.match(pattern))) {
-			result += source.slice(0, match.index);
-			result += replacement;
-			source = source.slice(match.index + match[0].length);
-		} else {
-			result += source;
-			source = '';
-		}
-	}
-	return result;
-};
-
 // ## Tasks
-desc('Start writing! write[]');
-task('write', function(title) {
-	var filename = getDate('filename') + '-' + title.replace(/\s+/g, '-').toLowerCase() + '.markdown';
-	var path = "_posts/";
-	var yml = getDate('yml');
-	var output = path + filename;
-	var stream = fs.createWriteStream(output);
-	console.log('Creating new post: ' + output);
-	stream.once('open', function(fd) {
-		stream.write('---\n');
-		stream.write('layout: post\n');
-		stream.write('title: "' + title + '"\n');
-		stream.write('date: ' + yml + '\n');
-		stream.write('---\n');
-	});
+desc('Start writing! write["date","title"]');
+task('write', function(date, title) {
+  var filename = dateFormat(date, 'yyyy-mm-dd') + '-' + title.replace(/\s+/g, '-').toLowerCase() + '.md';
+  var path = "_posts/";
+  var output = path + filename;
+  var stream = fs.createWriteStream(output);
+  console.log('Creating new post: ' + output);
+  stream.once('open', function(fd) {
+    stream.write('---\n');
+    stream.write('layout: post\n');
+    stream.write('category: five\n');
+    stream.write('title: "' + title + '"\n');
+    stream.write('---\n');
+    stream.write('\n');
+    stream.write('## \n');
+    stream.write('\n');
+    stream.write('## \n');
+    stream.write('\n');
+    stream.write('## \n');
+    stream.write('\n');
+    stream.write('## \n');
+    stream.write('\n');
+    stream.write('## \n');
+    stream.write('\n');
+  });
 });
 
 desc ('Deploy Amazon s3 Using s3Sync')
 task('deploy', function() {
-	execLog('s3sync -rpv _site/ five.studiomohawk.com:');
+  execLog('s3sync -rpv _site/ five.studiomohawk.com:');
 });
