@@ -10,7 +10,7 @@
     "grunt-contrib-copy": "~0.4.x",
     "grunt-shell": "~0.2.x",
     "grunt-contrib-connect": "~0.3.x",
-    "dateformat": "1.2.x",
+    "dateformat": "~1.0.6-1.2.3",
     "jake": "~0.5.x"
   }
 }

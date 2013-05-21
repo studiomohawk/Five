@@ -28,6 +28,7 @@ task('write', function(date, title) {
   var filename = dateFormat(date, 'yyyy-mm-dd') + '-' + title.replace(/\s+/g, '-').toLowerCase() + '.md';
   var path = "_posts/";
   var output = path + filename;
+  title = title.replace(/\d+/g, '. $&');
   var stream = fs.createWriteStream(output);
   console.log('Creating new post: ' + output);
   stream.once('open', function(fd) {
